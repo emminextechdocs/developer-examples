@@ -25,3 +25,9 @@ The tests start a temporary server on `127.0.0.1`, make requests to it, then clo
 Create a self-contained directory with a README, source code, automated tests, supported versions, expected output, cleanup instructions, and links to official documentation. State production limitations. Never commit `.env` files or client material.
 
 [Read our developer guides](https://emminextechdocs.com/blog) · [Browse documentation templates](https://github.com/emminextechdocs/documentation-templates)
+
+## License
+
+This repository's original code, documentation, and templates are available under the [MIT License](LICENSE). You may use, modify, and redistribute them, including commercially, provided you retain the copyright and license notice.
+
+This license does not grant trademark rights to the Emminex Techdocs name or logo, or license content on linked websites. Third-party material retains its own license.
