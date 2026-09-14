@@ -12,6 +12,8 @@ python3 deep-dives/lab.py postgres
 
 First execution downloads container images. RabbitMQ also installs Pika 1.3.2 into its disposable client container. Run labs sequentially on a workstation with limited memory. Grafana, NGINX, and OTLP publish dynamically allocated host ports bound to `127.0.0.1`. Kubernetes also creates a local kind API endpoint and a loopback Pod port-forward.
 
+The readiness probe connects over TCP inside the container, so it waits for the final server rather than the socket-only initialization server.
+
 ## Verified behavior
 
 - skip locked row without claiming it
@@ -44,3 +46,5 @@ The experiment tests the named behavior, not production readiness, availability,
 - [using explain](https://www.postgresql.org/docs/18/using-explain.html)
 - [routine vacuuming](https://www.postgresql.org/docs/18/routine-vacuuming.html)
 - [functions datetime](https://www.postgresql.org/docs/18/functions-datetime.html)
+
+- [Official image entrypoint](https://github.com/docker-library/postgres/blob/master/docker-entrypoint.sh)

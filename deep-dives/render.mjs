@@ -26,6 +26,8 @@ try {
       *{box-sizing:border-box} body{margin:0;background:#F5F6F2;color:#17211D;font:22px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:64px} main{max-width:1240px;margin:auto} small{font:18px monospace;color:#176B55} h1{font-size:42px;line-height:1.15;margin:18px 0} p{color:#5D6964;font-size:20px} article{background:#fff;border:1px solid #D8DFDA;border-left:5px solid #176B55;margin:24px 0;padding:24px}h2{font-size:24px;margin:0 0 12px}pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:18px/1.5 'SFMono-Regular',Consolas,monospace}</style><main><small>EMMINEX TECHDOCS · EXECUTION EVIDENCE</small><h1>${escape(name)}: recorded assertions</h1><p>Captured from the runnable lab’s test report. This is an evidence view, not the tool’s own interface.<br>Run started: ${escape(evidence.started_at)}</p>${assertions.map(e=>`<article><h2>${escape(e.assertion)}</h2><pre>${escape(typeof e.actual==='string'?e.actual:JSON.stringify(e.actual,null,2))}</pre></article>`).join('')}</main></html>`;
       await writeFile(resolve(root,'assets',`${name}-evidence.html`),html);
       await page.setContent(html,{waitUntil:'load'});
+      const height = await page.locator('main').evaluate(el => Math.ceil(el.getBoundingClientRect().bottom + 64));
+      await page.setViewportSize({width:1440,height});
       await page.screenshot({path:resolve(root,'assets',`${name}-evidence.png`),fullPage:true});
       console.log(`Captured ${name} execution evidence at 2x resolution`);
     }
