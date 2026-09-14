@@ -1,6 +1,6 @@
 {
   "lab": "prometheus",
-  "started_at": "2026-09-14T17:41:52.782719+00:00",
+  "started_at": "2026-09-14T20:06:34.943924+00:00",
   "passed": true,
   "events": [
     {
@@ -9,7 +9,7 @@
         "run",
         "--rm",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/prometheus:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/prometheus:/work:ro",
         "-w",
         "/work",
         "--entrypoint",

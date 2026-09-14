@@ -35,4 +35,25 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/kubectl
       - name: Run the real tool experiment
-        run: python3 deep-dives/lab.py ${{ matrix.lab }}
+        run: python3 deep-dives/walkthrough.py ${{ matrix.lab }}
+      - name: Run the manual recovery sequence
+        if: matrix.lab == 'postgres' || matrix.lab == 'redis'
+        run: bash deep-dives/${{ matrix.lab }}/manual.sh
+      - name: Verify live observability companion
+        if: matrix.lab == 'prometheus'
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker compose -p emminex-observe -f deep-dives/observability/compose.yml down -v' EXIT
+          docker compose -p emminex-observe -f deep-dives/observability/compose.yml up -d
+          python3 deep-dives/verify-companions.py observability
+      - name: Verify live RabbitMQ recovery companion
+        if: matrix.lab == 'rabbitmq'
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker compose -p emminex-rabbit-ui -f deep-dives/rabbitmq/ui/compose.yml down -v' EXIT
+          docker compose -p emminex-rabbit-ui -f deep-dives/rabbitmq/ui/compose.yml up -d
+          python3 deep-dives/verify-companions.py rabbit-unacked
+          docker compose -p emminex-rabbit-ui -f deep-dives/rabbitmq/ui/compose.yml stop consumer
+          python3 deep-dives/verify-companions.py rabbit-ready

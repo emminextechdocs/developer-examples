@@ -1,6 +1,6 @@
 {
   "lab": "rabbitmq",
-  "started_at": "2026-09-14T17:20:48.263488+00:00",
+  "started_at": "2026-09-14T20:06:24.200156+00:00",
   "passed": true,
   "events": [
     {
@@ -9,10 +9,10 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-6aae89c597",
+        "emminex-dd-895562a94b",
         "rabbitmq:4.1.4-management-alpine"
       ],
-      "stdout": "1406231a13f8376bd1d7ffa6ee267620abb5172dc1413767089a6c1e00e40dd3\n",
+      "stdout": "40fdc70b4879f5b448c0f5fff9c1bb76c6b3c135de8dbef90c83ef1575831bee\n",
       "stderr": "",
       "exit": 0
     },
@@ -22,12 +22,12 @@
         "exec",
         "--user",
         "rabbitmq",
-        "emminex-dd-6aae89c597",
+        "emminex-dd-895562a94b",
         "rabbitmq-diagnostics",
         "ping"
       ],
-      "stdout": "Will ping rabbit@1406231a13f8. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\n",
-      "stderr": "Error:\nFailed to connect and authenticate to rabbit@1406231a13f8 in 60000 ms\n",
+      "stdout": "Will ping rabbit@40fdc70b4879. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\n",
+      "stderr": "Error:\nFailed to connect and authenticate to rabbit@40fdc70b4879 in 60000 ms\n",
       "exit": 69
     },
     {
@@ -36,11 +36,11 @@
         "exec",
         "--user",
         "rabbitmq",
-        "emminex-dd-6aae89c597",
+        "emminex-dd-895562a94b",
         "rabbitmq-diagnostics",
         "ping"
       ],
-      "stdout": "Will ping rabbit@1406231a13f8. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\nPing succeeded\n",
+      "stdout": "Will ping rabbit@40fdc70b4879. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\nPing succeeded\n",
       "stderr": "",
       "exit": 0
     },
@@ -50,9 +50,9 @@
         "run",
         "--rm",
         "--network",
-        "container:emminex-dd-6aae89c597",
+        "container:emminex-dd-895562a94b",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/rabbitmq:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/rabbitmq:/work:ro",
         "python:3.13.7-alpine",
         "sh",
         "-c",
@@ -72,9 +72,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-6aae89c597"
+        "emminex-dd-895562a94b"
       ],
-      "stdout": "emminex-dd-6aae89c597\n",
+      "stdout": "emminex-dd-895562a94b\n",
       "stderr": "",
       "exit": 0
     }

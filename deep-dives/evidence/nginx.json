@@ -1,6 +1,6 @@
 {
   "lab": "nginx",
-  "started_at": "2026-09-14T17:23:52.296001+00:00",
+  "started_at": "2026-09-14T20:06:57.455669+00:00",
   "passed": true,
   "events": [
     {
@@ -8,9 +8,9 @@
         "docker",
         "network",
         "create",
-        "emminex-dd-4c239df2eb"
+        "emminex-dd-d8eeec9021"
       ],
-      "stdout": "93f8282a63dba4bf7a04a44751b01f6b262b9ae1b9b2586ca1465513715418a5\n",
+      "stdout": "0134dd7edebbd25106863dabb771a4e282ff159c05c2233fda7661a55dfc75f1\n",
       "stderr": "",
       "exit": 0
     },
@@ -20,20 +20,20 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-e6bf94bc4d",
+        "emminex-dd-19d956951c",
         "--network",
-        "emminex-dd-4c239df2eb",
+        "emminex-dd-d8eeec9021",
         "--network-alias",
         "a",
         "-e",
         "BACKEND_NAME=a",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/nginx:/work:ro",
         "python:3.13.7-alpine",
         "python",
         "/work/backend.py"
       ],
-      "stdout": "fb15a1e0c64a8ef69ed12cbd52b973855bf440bd8479dc0198281d0ddede011f\n",
+      "stdout": "7215b739d82f61ce8874025a55f24902d5c8517ab8b35a6b267d661592cf1d0f\n",
       "stderr": "",
       "exit": 0
     },
@@ -41,7 +41,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-e6bf94bc4d",
+        "emminex-dd-19d956951c",
         "python",
         "-c",
         "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)"
@@ -56,20 +56,20 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-c6a0646925",
+        "emminex-dd-8bbcaeab5d",
         "--network",
-        "emminex-dd-4c239df2eb",
+        "emminex-dd-d8eeec9021",
         "--network-alias",
         "b",
         "-e",
         "BACKEND_NAME=b",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/nginx:/work:ro",
         "python:3.13.7-alpine",
         "python",
         "/work/backend.py"
       ],
-      "stdout": "cbdcec169a149b8f8ce73ff0560163ce5b62678de644439a74dbf353d03e8d5b\n",
+      "stdout": "61fd1be6d12f789f3de5d0dfcc60fd6b68ed41619bbf20a68fc15f283a93eacf\n",
       "stderr": "",
       "exit": 0
     },
@@ -77,7 +77,20 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-c6a0646925",
+        "emminex-dd-8bbcaeab5d",
+        "python",
+        "-c",
+        "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)"
+      ],
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 1319, in do_open\n    h.request(req.get_method(), req.selector, req.data, headers,\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n              encode_chunked=req.has_header('Transfer-encoding'))\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1338, in request\n    self._send_request(method, url, body, headers, encode_chunked)\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1384, in _send_request\n    self.endheaders(body, encode_chunked=encode_chunked)\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1333, in endheaders\n    self._send_output(message_body, encode_chunked=encode_chunked)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1093, in _send_output\n    self.send(msg)\n    ~~~~~~~~~^^^^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1037, in send\n    self.connect()\n    ~~~~~~~~~~~~^^\n  File \"/usr/local/lib/python3.13/http/client.py\", line 1003, in connect\n    self.sock = self._create_connection(\n                ~~~~~~~~~~~~~~~~~~~~~~~^\n        (self.host,self.port), self.timeout, self.source_address)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/socket.py\", line 864, in create_connection\n    raise exceptions[0]\n  File \"/usr/local/lib/python3.13/socket.py\", line 849, in create_connection\n    sock.connect(sa)\n    ~~~~~~~~~~~~^^^^\nConnectionRefusedError: [Errno 111] Connection refused\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)\n                                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 189, in urlopen\n    return opener.open(url, data, timeout)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 489, in open\n    response = self._open(req, data)\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 506, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n                              '_open', req)\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 466, in _call_chain\n    result = func(*args)\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 1348, in http_open\n    return self.do_open(http.client.HTTPConnection, req)\n           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/urllib/request.py\", line 1322, in do_open\n    raise URLError(err)\nurllib.error.URLError: <urlopen error [Errno 111] Connection refused>\n",
+      "exit": 1
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "emminex-dd-8bbcaeab5d",
         "python",
         "-c",
         "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)"
@@ -92,16 +105,16 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-02ee7e28de",
+        "emminex-dd-afc1b8e886",
         "--network",
-        "emminex-dd-4c239df2eb",
+        "emminex-dd-d8eeec9021",
         "-p",
         "127.0.0.1::8080",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx/nginx.conf:/etc/nginx/nginx.conf:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/nginx/nginx.conf:/etc/nginx/nginx.conf:ro",
         "nginx:1.28.0-alpine"
       ],
-      "stdout": "34936c1c59cc43fd3a229d3bc1448e37c3ea0f65f6129d6363f06713fb3005a7\n",
+      "stdout": "7b55ad3c3fe8e64eaaf69b95e6443d0c6e6fa28e260a1b65d035fb86fb7fd549\n",
       "stderr": "",
       "exit": 0
     },
@@ -109,10 +122,10 @@
       "command": [
         "docker",
         "port",
-        "emminex-dd-02ee7e28de",
+        "emminex-dd-afc1b8e886",
         "8080/tcp"
       ],
-      "stdout": "127.0.0.1:64345\n",
+      "stdout": "127.0.0.1:51860\n",
       "stderr": "",
       "exit": 0
     },
@@ -134,15 +147,15 @@
       "command": [
         "docker",
         "logs",
-        "emminex-dd-02ee7e28de"
+        "emminex-dd-afc1b8e886"
       ],
-      "stdout": "/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration\n/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh\n10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf\n10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf\n/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh\n/docker-entrypoint.sh: Configuration complete; ready for start up\nGET 200 upstream=172.21.0.2:8080, 172.21.0.3:8080 status=503, 200\nPOST 503 upstream=172.21.0.2:8080 status=503\n",
+      "stdout": "/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration\n/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh\n10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf\n10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf\n/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh\n/docker-entrypoint.sh: Configuration complete; ready for start up\nGET 200 upstream=172.23.0.2:8080, 172.23.0.3:8080 status=503, 200\nPOST 503 upstream=172.23.0.2:8080 status=503\n",
       "stderr": "",
       "exit": 0
     },
     {
       "assertion": "upstream attempts captured in access log",
-      "actual": "GET 200 upstream=172.21.0.2:8080, 172.21.0.3:8080 status=503, 200\nPOST 503 upstream=172.21.0.2:8080 status=503"
+      "actual": "GET 200 upstream=172.23.0.2:8080, 172.23.0.3:8080 status=503, 200\nPOST 503 upstream=172.23.0.2:8080 status=503"
     },
     {
       "command": [
@@ -150,9 +163,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-02ee7e28de"
+        "emminex-dd-afc1b8e886"
       ],
-      "stdout": "emminex-dd-02ee7e28de\n",
+      "stdout": "emminex-dd-afc1b8e886\n",
       "stderr": "",
       "exit": 0
     },
@@ -162,9 +175,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-c6a0646925"
+        "emminex-dd-8bbcaeab5d"
       ],
-      "stdout": "emminex-dd-c6a0646925\n",
+      "stdout": "emminex-dd-8bbcaeab5d\n",
       "stderr": "",
       "exit": 0
     },
@@ -174,9 +187,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-e6bf94bc4d"
+        "emminex-dd-19d956951c"
       ],
-      "stdout": "emminex-dd-e6bf94bc4d\n",
+      "stdout": "emminex-dd-19d956951c\n",
       "stderr": "",
       "exit": 0
     },
@@ -185,9 +198,9 @@
         "docker",
         "network",
         "rm",
-        "emminex-dd-4c239df2eb"
+        "emminex-dd-d8eeec9021"
       ],
-      "stdout": "emminex-dd-4c239df2eb\n",
+      "stdout": "emminex-dd-d8eeec9021\n",
       "stderr": "",
       "exit": 0
     }

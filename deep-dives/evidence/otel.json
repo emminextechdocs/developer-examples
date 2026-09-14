@@ -1,6 +1,6 @@
 {
   "lab": "otel",
-  "started_at": "2026-09-14T17:41:53.026951+00:00",
+  "started_at": "2026-09-14T20:07:01.168476+00:00",
   "passed": true,
   "events": [
     {
@@ -9,16 +9,16 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-bd738d88ae",
+        "emminex-dd-6034199f7e",
         "-p",
         "127.0.0.1::4318",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/otel/collector.yml:/etc/otelcol-contrib/config.yaml:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/otel/collector.yml:/etc/otelcol-contrib/config.yaml:ro",
         "-v",
-        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpqs5bg4b_:/evidence",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpudelpas8:/evidence",
         "otel/opentelemetry-collector-contrib:0.133.0"
       ],
-      "stdout": "0a5d6082679fa563f6fa8e202c8dee8a882e9f362c7216cf35c314605d23b35e\n",
+      "stdout": "8288bfe8d4a4860908a38899389f3bdd06e9dce6506daf6783e4af9345494467\n",
       "stderr": "",
       "exit": 0
     },
@@ -26,10 +26,10 @@
       "command": [
         "docker",
         "port",
-        "emminex-dd-bd738d88ae",
+        "emminex-dd-6034199f7e",
         "4318/tcp"
       ],
-      "stdout": "127.0.0.1:64717\n",
+      "stdout": "127.0.0.1:51870\n",
       "stderr": "",
       "exit": 0
     },
@@ -39,9 +39,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-bd738d88ae"
+        "emminex-dd-6034199f7e"
       ],
-      "stdout": "emminex-dd-bd738d88ae\n",
+      "stdout": "emminex-dd-6034199f7e\n",
       "stderr": "",
       "exit": 0
     },
@@ -76,16 +76,16 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-6cc3cb24b8",
+        "emminex-dd-98ad94b7ab",
         "-p",
         "127.0.0.1::4318",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/otel/collector-events.yml:/etc/otelcol-contrib/config.yaml:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/otel/collector-events.yml:/etc/otelcol-contrib/config.yaml:ro",
         "-v",
-        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp0s3c0qgk:/evidence",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpzxgkzg7v:/evidence",
         "otel/opentelemetry-collector-contrib:0.133.0"
       ],
-      "stdout": "d21efb69fd862ae54c7cb5c2d8572144263af559b6be389541f80e63f11ff61c\n",
+      "stdout": "09c7ba0f1dacc49c893d3e14dca42c89a40ebf3fd909e5c39b9a6a5ed54cab58\n",
       "stderr": "",
       "exit": 0
     },
@@ -93,10 +93,10 @@
       "command": [
         "docker",
         "port",
-        "emminex-dd-6cc3cb24b8",
+        "emminex-dd-98ad94b7ab",
         "4318/tcp"
       ],
-      "stdout": "127.0.0.1:64721\n",
+      "stdout": "127.0.0.1:51878\n",
       "stderr": "",
       "exit": 0
     },
@@ -106,9 +106,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-6cc3cb24b8"
+        "emminex-dd-98ad94b7ab"
       ],
-      "stdout": "emminex-dd-6cc3cb24b8\n",
+      "stdout": "emminex-dd-98ad94b7ab\n",
       "stderr": "",
       "exit": 0
     },
