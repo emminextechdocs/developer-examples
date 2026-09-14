@@ -1,0 +1,20 @@
+{
+  "reviewed_at": "2026-09-14",
+  "labs": {
+    "postgres": true,
+    "redis": true,
+    "kafka": true,
+    "rabbitmq": true,
+    "prometheus": true,
+    "grafana": true,
+    "nginx": true,
+    "otel": true,
+    "buildkit": true,
+    "kubernetes": true
+  },
+  "manual_postgres": "1. Hold job 1 in a separate transaction\nClaim while job 1 is locked: 2|1\n2. Claim after rollback: 1|1\n3. Reclaim after forced expiry: 1|2\nCompletion with generation 1: 0 row(s)\nCompletion with generation 2: 1 row(s)\nPASS: skipped lock, reclaimed lease, rejected stale completion\n",
+  "manual_redis": "1. Create a group and deliver one event to worker A\nOK\norders\n1789416864047-0\norder_id\nord-42\nWorker B new-message read: empty\n2. Restart Redis using the same container storage\n1\n1789416864047-0\n1789416864047-0\nworker-a\n1\n3. Reclaim the original entry after its idle threshold\n0-0\n1789416864047-0\norder_id\nord-42\n4. Acknowledge, then inspect pending state and retention\nFirst XACK: 1; repeated XACK: 0\nPending count: 0; stream length: 1\nPASS: same pending ID recovered and acknowledged; payload retained\n",
+  "article_postgres_commands": "2|1\n1|1\n1|2\n0\n1\n",
+  "article_redis_commands": "OK\norders\n1789417136796-0\norder_id\nord-42\n\nemminex-redis-manual-22921\n1\n1789417136796-0\n1789417136796-0\nworker-a\n1\n0-0\n1789417136796-0\norder_id\nord-42\n\n1\n0\n0\n\n\n\n1\n",
+  "scope": "Local disposable fixtures; no production availability or benchmark claim."
+}

@@ -1,6 +1,6 @@
 {
   "lab": "grafana",
-  "started_at": "2026-09-14T17:52:00.915904+00:00",
+  "started_at": "2026-09-14T20:06:37.686337+00:00",
   "passed": true,
   "events": [
     {
@@ -8,9 +8,9 @@
         "docker",
         "network",
         "create",
-        "emminex-dd-38b016a5d6"
+        "emminex-dd-e4048b0ef2"
       ],
-      "stdout": "78b63eee4c6e2585668fbbbafe1297edd82c18cb80c735e12d342d4e47520c79\n",
+      "stdout": "95dba6287454bf1e1624bf379081b4e4007e4849bc9d8e4b8230cb741505b48e\n",
       "stderr": "",
       "exit": 0
     },
@@ -20,16 +20,16 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-c811981d90",
+        "emminex-dd-0f0921b253",
         "--network",
-        "emminex-dd-38b016a5d6",
+        "emminex-dd-e4048b0ef2",
         "--network-alias",
         "metrics",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/grafana/prometheus.yml:/etc/prometheus/prometheus.yml:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/grafana/prometheus.yml:/etc/prometheus/prometheus.yml:ro",
         "prom/prometheus:v3.5.0"
       ],
-      "stdout": "526d0db1e9de088b2900602c3600229e4de7925ba75a270aaae7a1ef47c5a85b\n",
+      "stdout": "41fc58165700fcae8c17fd6e133df2067e374f66e31d43ff7b10a1c791615742\n",
       "stderr": "",
       "exit": 0
     },
@@ -39,9 +39,9 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-fe2d56fc35",
+        "emminex-dd-8d68196e7b",
         "--network",
-        "emminex-dd-38b016a5d6",
+        "emminex-dd-e4048b0ef2",
         "-p",
         "127.0.0.1::3000",
         "-e",
@@ -51,12 +51,12 @@
         "-e",
         "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/grafana/provisioning:/etc/grafana/provisioning:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/grafana/provisioning:/etc/grafana/provisioning:ro",
         "-v",
-        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpbob3rpx0:/var/lib/grafana/dashboards:ro",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp35uwmrp0:/var/lib/grafana/dashboards:ro",
         "grafana/grafana:12.1.1"
       ],
-      "stdout": "04f3063dcf4382a1793aa031457bae07314718ac0be805cd351045fda9b98fec\n",
+      "stdout": "1cc9ca54674fabe07050e6d54ba5e6bdd65d25e6c05b3d1e25d7b44f648b1baf\n",
       "stderr": "",
       "exit": 0
     },
@@ -64,10 +64,10 @@
       "command": [
         "docker",
         "port",
-        "emminex-dd-fe2d56fc35",
+        "emminex-dd-8d68196e7b",
         "3000/tcp"
       ],
-      "stdout": "127.0.0.1:64954\n",
+      "stdout": "127.0.0.1:51769\n",
       "stderr": "",
       "exit": 0
     },
@@ -94,13 +94,13 @@
     },
     {
       "command": [
-        "node",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/render.mjs",
-        "--url",
-        "http://127.0.0.1:64954/d/reliability-lab?orgId=1&from=now-1m&to=now",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/assets/grafana-dashboard.png"
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-8d68196e7b"
       ],
-      "stdout": "",
+      "stdout": "emminex-dd-8d68196e7b\n",
       "stderr": "",
       "exit": 0
     },
@@ -110,21 +110,9 @@
         "rm",
         "-f",
         "-v",
-        "emminex-dd-fe2d56fc35"
+        "emminex-dd-0f0921b253"
       ],
-      "stdout": "emminex-dd-fe2d56fc35\n",
-      "stderr": "",
-      "exit": 0
-    },
-    {
-      "command": [
-        "docker",
-        "rm",
-        "-f",
-        "-v",
-        "emminex-dd-c811981d90"
-      ],
-      "stdout": "emminex-dd-c811981d90\n",
+      "stdout": "emminex-dd-0f0921b253\n",
       "stderr": "",
       "exit": 0
     },
@@ -133,9 +121,9 @@
         "docker",
         "network",
         "rm",
-        "emminex-dd-38b016a5d6"
+        "emminex-dd-e4048b0ef2"
       ],
-      "stdout": "emminex-dd-38b016a5d6\n",
+      "stdout": "emminex-dd-e4048b0ef2\n",
       "stderr": "",
       "exit": 0
     }

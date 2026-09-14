@@ -1,0 +1,22 @@
+services:
+  broker:
+    image: rabbitmq:4.1.4-management-alpine
+    hostname: rabbit-ui-lab
+    environment:
+      RABBITMQ_DEFAULT_USER: lab
+      RABBITMQ_DEFAULT_PASS: local-lab-only
+    ports:
+      - 127.0.0.1:15674:15672
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+  consumer:
+    image: python:3.13.7-alpine
+    command: [sh, -c, "pip install --quiet pika==1.3.2 && python /app/hold.py"]
+    depends_on:
+      broker:
+        condition: service_healthy
+    volumes:
+      - ./hold.py:/app/hold.py:ro

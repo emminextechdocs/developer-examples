@@ -42,3 +42,7 @@ The experiment tests the named behavior, not production readiness, availability,
 - [xtrim](https://redis.io/docs/latest/commands/xtrim/)
 - [persistence](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
 - [replication](https://redis.io/docs/latest/operate/oss_and_stack/management/replication/)
+
+## Manual walkthrough
+
+From the repository root, run `bash deep-dives/redis/manual.sh` for the full command sequence with assertions and automatic cleanup. To follow the article one step at a time, start a fresh Bash session and source `deep-dives/redis/session.sh`; exiting that session removes its container. The session helpers publish no database port.

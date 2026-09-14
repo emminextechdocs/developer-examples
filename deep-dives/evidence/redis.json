@@ -1,6 +1,6 @@
 {
   "lab": "redis",
-  "started_at": "2026-09-14T17:02:07.292102+00:00",
+  "started_at": "2026-09-14T20:06:13.671033+00:00",
   "passed": true,
   "events": [
     {
@@ -9,7 +9,7 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis:8.2.1-alpine",
         "redis-server",
         "--appendonly",
@@ -17,7 +17,7 @@
         "--appendfsync",
         "always"
       ],
-      "stdout": "9cc58262c0640fd5b20d3a06f4fe3fc2b2057e76efcafd29d5e5a38d71f45640\n",
+      "stdout": "9fdfb905384c32061d05192273ce86213833bd8b3d4b7600ef4c0683f9deff2e\n",
       "stderr": "",
       "exit": 0
     },
@@ -25,7 +25,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "PING"
@@ -38,7 +38,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XGROUP",
@@ -56,7 +56,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XADD",
@@ -65,7 +65,7 @@
         "order_id",
         "ord-42"
       ],
-      "stdout": "\"1789405327451-0\"\n",
+      "stdout": "\"1789416373850-0\"\n",
       "stderr": "",
       "exit": 0
     },
@@ -73,7 +73,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XREADGROUP",
@@ -86,19 +86,19 @@
         "orders",
         ">"
       ],
-      "stdout": "{\"orders\":[[\"1789405327451-0\",[\"order_id\",\"ord-42\"]]]}\n",
+      "stdout": "{\"orders\":[[\"1789416373850-0\",[\"order_id\",\"ord-42\"]]]}\n",
       "stderr": "",
       "exit": 0
     },
     {
       "assertion": "first delivery assigned to worker-a",
-      "actual": "1789405327451-0"
+      "actual": "1789416373850-0"
     },
     {
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XREADGROUP",
@@ -123,9 +123,9 @@
       "command": [
         "docker",
         "restart",
-        "emminex-dd-1a3d373420"
+        "emminex-dd-43295eb383"
       ],
-      "stdout": "emminex-dd-1a3d373420\n",
+      "stdout": "emminex-dd-43295eb383\n",
       "stderr": "",
       "exit": 0
     },
@@ -133,7 +133,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "PING"
@@ -146,14 +146,14 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XPENDING",
         "orders",
         "workers"
       ],
-      "stdout": "[1,\"1789405327451-0\",\"1789405327451-0\",[[\"worker-a\",\"1\"]]]\n",
+      "stdout": "[1,\"1789416373850-0\",\"1789416373850-0\",[[\"worker-a\",\"1\"]]]\n",
       "stderr": "",
       "exit": 0
     },
@@ -165,7 +165,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XAUTOCLAIM",
@@ -177,7 +177,7 @@
         "COUNT",
         "10"
       ],
-      "stdout": "[\"0-0\",[[\"1789405327451-0\",[\"order_id\",\"ord-42\"]]],[]]\n",
+      "stdout": "[\"0-0\",[[\"1789416373850-0\",[\"order_id\",\"ord-42\"]]],[]]\n",
       "stderr": "",
       "exit": 0
     },
@@ -187,7 +187,7 @@
         "0-0",
         [
           [
-            "1789405327451-0",
+            "1789416373850-0",
             [
               "order_id",
               "ord-42"
@@ -201,13 +201,13 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XACK",
         "orders",
         "workers",
-        "1789405327451-0"
+        "1789416373850-0"
       ],
       "stdout": "1\n",
       "stderr": "",
@@ -217,13 +217,13 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XACK",
         "orders",
         "workers",
-        "1789405327451-0"
+        "1789416373850-0"
       ],
       "stdout": "0\n",
       "stderr": "",
@@ -233,7 +233,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XPENDING",
@@ -248,7 +248,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-1a3d373420",
+        "emminex-dd-43295eb383",
         "redis-cli",
         "--json",
         "XLEN",
@@ -270,9 +270,10 @@
         "docker",
         "rm",
         "-f",
-        "emminex-dd-1a3d373420"
+        "-v",
+        "emminex-dd-43295eb383"
       ],
-      "stdout": "emminex-dd-1a3d373420\n",
+      "stdout": "emminex-dd-43295eb383\n",
       "stderr": "",
       "exit": 0
     }

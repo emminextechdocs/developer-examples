@@ -1,6 +1,6 @@
 {
   "lab": "kafka",
-  "started_at": "2026-09-14T17:10:04.902831+00:00",
+  "started_at": "2026-09-14T20:06:16.438295+00:00",
   "passed": true,
   "events": [
     {
@@ -9,12 +9,12 @@
         "run",
         "-d",
         "--name",
-        "emminex-dd-f593eed680",
+        "emminex-dd-443a79d2f7",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/kafka:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/kafka:/work:ro",
         "apache/kafka:4.1.0"
       ],
-      "stdout": "c728234a27bc5ff7ec3a64100e76d523d68f313d4d7e56ffcb8161311c39034e\n",
+      "stdout": "ed0bb09091e2da27f549822f9753c2be8dd29068ba5d762591fd339625884e36\n",
       "stderr": "",
       "exit": 0
     },
@@ -22,7 +22,7 @@
       "command": [
         "docker",
         "exec",
-        "emminex-dd-f593eed680",
+        "emminex-dd-443a79d2f7",
         "/opt/kafka/bin/kafka-topics.sh",
         "--bootstrap-server",
         "localhost:9092",
@@ -36,15 +36,15 @@
         "1"
       ],
       "stdout": "Created topic orders.\n",
-      "stderr": "[2026-09-14 17:10:05,664] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:05,769] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:05,880] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:06,188] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:06,593] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n",
+      "stderr": "[2026-09-14 20:06:16,995] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 20:06:17,101] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 20:06:17,212] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 20:06:17,412] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 20:06:17,818] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n",
       "exit": 0
     },
     {
       "command": [
         "docker",
         "cp",
-        "emminex-dd-f593eed680:/opt/kafka/libs",
-        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp32nd26vb"
+        "emminex-dd-443a79d2f7:/opt/kafka/libs",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpy4f1pjou"
       ],
       "stdout": "",
       "stderr": "",
@@ -56,11 +56,11 @@
         "run",
         "--rm",
         "--network",
-        "container:emminex-dd-f593eed680",
+        "container:emminex-dd-443a79d2f7",
         "-v",
-        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp32nd26vb/libs:/libs:ro",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpy4f1pjou/libs:/libs:ro",
         "-v",
-        "/private/tmp/emminex-deep-dives-code/deep-dives/kafka:/work:ro",
+        "/private/tmp/emminex-tutorial-demos/deep-dives/kafka:/work:ro",
         "eclipse-temurin:21.0.8_9-jdk-alpine",
         "java",
         "--class-path",
@@ -80,9 +80,10 @@
         "docker",
         "rm",
         "-f",
-        "emminex-dd-f593eed680"
+        "-v",
+        "emminex-dd-443a79d2f7"
       ],
-      "stdout": "emminex-dd-f593eed680\n",
+      "stdout": "emminex-dd-443a79d2f7\n",
       "stderr": "",
       "exit": 0
     }

@@ -1,0 +1,24 @@
+services:
+  checkout:
+    image: python:3.13.7-alpine
+    command: [python, /app/metrics.py]
+    volumes:
+      - ./metrics.py:/app/metrics.py:ro
+  metrics:
+    image: prom/prometheus:v3.5.0
+    ports:
+      - 127.0.0.1:19090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../prometheus/rules.yml:/etc/prometheus/rules.yml:ro
+  grafana:
+    image: grafana/grafana:12.1.1
+    ports:
+      - 127.0.0.1:13000:3000
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: local-lab-only
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro

@@ -1,6 +1,6 @@
 # Senior developer deep dives
 
-Ten runnable, isolated experiments with failure assertions, recorded evidence, and editable technical diagrams. Article drafts are maintained separately in the website editorial intake; publishing this code does not publish those drafts.
+Ten runnable, isolated experiments with failure assertions, recorded evidence, and editable technical diagrams. The accompanying tutorials are published under Emmanuel Oyibo’s byline at [Emminex Techdocs](https://emminextechdocs.com/blog).
 
 ## Experiments
 
@@ -22,10 +22,21 @@ Ten runnable, isolated experiments with failure assertions, recorded evidence, a
 Python 3.11+, Docker, and network access for pinned-version images. Kubernetes additionally needs kind 0.30.0 and kubectl 1.34.x. The Python scripts use the standard library on the host. Read each lab’s README before running it.
 
 ```sh
-python3 deep-dives/lab.py postgres
+python3 deep-dives/walkthrough.py postgres
 ```
 
 Run one lab at a time on a memory-constrained workstation. These tests create disposable infrastructure; they never target an existing database, cluster context, or production endpoint. Do not run with `python -O`. The code intentionally contains synthetic credentials and incomplete configurations used as negative-test fixtures; their article and test context explain the boundary being demonstrated.
+
+## Interactive walkthroughs
+
+`walkthrough.py` runs the same assertions as `lab.py` and prints selected executed commands and responses. It does not replay saved results. Its optional `--hold 30` leaves the completed terminal visible for a capture; it does not retain the lab containers.
+
+- [PostgreSQL manual sequence](postgres/manual.sh): `bash deep-dives/postgres/manual.sh`.
+- [Redis manual sequence](redis/manual.sh): `bash deep-dives/redis/manual.sh`.
+- [Live Prometheus and Grafana](observability/README.md): synthetic metrics and a provisioned dashboard, with browser URLs and cleanup commands.
+- [RabbitMQ management UI](rabbitmq/ui/README.md): inspect Unacked → Ready after the client connection closes.
+
+The manual database scripts also expose `session.sh` helpers for the command-by-command article paths. Source them inside a fresh Bash session from the repository root; exiting that session removes its container.
 
 ## Evidence and screenshots
 
