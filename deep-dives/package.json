@@ -2,6 +2,10 @@
   "name": "emminex-deep-dive-visuals",
   "private": true,
   "type": "module",
-  "scripts": {"screenshots": "node render.mjs"},
-  "devDependencies": {"playwright": "1.55.0"}
+  "scripts": {
+    "screenshots": "node render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.55.1"
+  }
 }

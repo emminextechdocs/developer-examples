@@ -67,7 +67,9 @@ def postgres():
     image = "postgres:18.6-alpine"
     with container(image, "-e", "POSTGRES_PASSWORD=local-lab-only") as c:
         def sql(text):
-            return run("docker", "exec", "-i", c, "psql", "-U", "postgres", "-XqAt", "-v", "ON_ERROR_STOP=1", input=text)
+            return run("docker", "exec", "-e", "PGPASSWORD=local-lab-only", "-i", c, "psql", "-h", "127.0.0.1", "-U", "postgres", "-XqAt", "-v", "ON_ERROR_STOP=1", input=text)
+        # The image's temporary initialization server accepts Unix sockets only.
+        # TCP readiness waits for the final server, after initialization finishes.
         wait_until(lambda: sql("SELECT 1;") == "1")
         sql((ROOT / "postgres/schema.sql").read_text())
         locker = subprocess.Popen(["docker", "exec", c, "psql", "-U", "postgres", "-XAt", "-c",
