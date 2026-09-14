@@ -1,0 +1,90 @@
+{
+  "lab": "kafka",
+  "started_at": "2026-09-14T17:10:04.902831+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-f593eed680",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/kafka:/work:ro",
+        "apache/kafka:4.1.0"
+      ],
+      "stdout": "c728234a27bc5ff7ec3a64100e76d523d68f313d4d7e56ffcb8161311c39034e\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "emminex-dd-f593eed680",
+        "/opt/kafka/bin/kafka-topics.sh",
+        "--bootstrap-server",
+        "localhost:9092",
+        "--create",
+        "--if-not-exists",
+        "--topic",
+        "orders",
+        "--partitions",
+        "1",
+        "--replication-factor",
+        "1"
+      ],
+      "stdout": "Created topic orders.\n",
+      "stderr": "[2026-09-14 17:10:05,664] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:05,769] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:05,880] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:06,188] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n[2026-09-14 17:10:06,593] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)\n",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "cp",
+        "emminex-dd-f593eed680:/opt/kafka/libs",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp32nd26vb"
+      ],
+      "stdout": "",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "container:emminex-dd-f593eed680",
+        "-v",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp32nd26vb/libs:/libs:ro",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/kafka:/work:ro",
+        "eclipse-temurin:21.0.8_9-jdk-alpine",
+        "java",
+        "--class-path",
+        "/libs/*",
+        "/work/Replay.java"
+      ],
+      "stdout": "READ without commit: offset=0 key=ord-1\nREPLAY after consumer close: offset=0\nCOMMIT next offset=1\nRESUME next record: offset=1 key=ord-2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "Kafka offset replay and committed resume",
+      "actual": "READ without commit: offset=0 key=ord-1\nREPLAY after consumer close: offset=0\nCOMMIT next offset=1\nRESUME next record: offset=1 key=ord-2"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "emminex-dd-f593eed680"
+      ],
+      "stdout": "emminex-dd-f593eed680\n",
+      "stderr": "",
+      "exit": 0
+    }
+  ]
+}

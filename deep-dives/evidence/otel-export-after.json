@@ -1,0 +1,48 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "checkout-lab"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "emminex-redaction-lab"
+          },
+          "spans": [
+            {
+              "traceId": "11111111111111111111111111111111",
+              "spanId": "2222222222222222",
+              "name": "POST /orders",
+              "kind": 2,
+              "startTimeUnixNano": "1789401600000000000",
+              "endTimeUnixNano": "1789401600100000000",
+              "attributes": [
+                {
+                  "key": "customer.tier",
+                  "value": {
+                    "stringValue": "pro"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1789401600050000000",
+                  "name": "synthetic privacy boundary probe"
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

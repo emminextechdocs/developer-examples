@@ -1,0 +1,38 @@
+name: Deep dive experiments
+on:
+  pull_request:
+    paths: ['deep-dives/**', '.github/workflows/deep-dives.yml']
+  push:
+    branches: [main]
+    paths: ['deep-dives/**', '.github/workflows/deep-dives.yml']
+permissions:
+  contents: read
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: [postgres, redis, kafka, rabbitmq, prometheus, grafana, nginx, otel, buildkit, kubernetes]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install pinned Kubernetes test tools
+        if: matrix.lab == 'kubernetes'
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSLo kind https://kind.sigs.k8s.io/dl/v0.30.0/kind-linux-amd64
+          curl -fsSLo kind.sha256sum https://github.com/kubernetes-sigs/kind/releases/download/v0.30.0/kind-linux-amd64.sha256sum
+          sed 's/kind-linux-amd64/kind/' kind.sha256sum | sha256sum --check
+          chmod +x kind
+          sudo mv kind /usr/local/bin/kind
+          curl -fsSLo kubectl https://dl.k8s.io/release/v1.34.0/bin/linux/amd64/kubectl
+          curl -fsSLo kubectl.sha256 https://dl.k8s.io/release/v1.34.0/bin/linux/amd64/kubectl.sha256
+          printf '%s  kubectl\n' "$(cat kubectl.sha256)" | sha256sum --check
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+      - name: Run the real tool experiment
+        run: python3 deep-dives/lab.py ${{ matrix.lab }}

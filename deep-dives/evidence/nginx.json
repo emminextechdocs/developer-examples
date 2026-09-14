@@ -1,0 +1,195 @@
+{
+  "lab": "nginx",
+  "started_at": "2026-09-14T17:23:52.296001+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "create",
+        "emminex-dd-4c239df2eb"
+      ],
+      "stdout": "93f8282a63dba4bf7a04a44751b01f6b262b9ae1b9b2586ca1465513715418a5\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-e6bf94bc4d",
+        "--network",
+        "emminex-dd-4c239df2eb",
+        "--network-alias",
+        "a",
+        "-e",
+        "BACKEND_NAME=a",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx:/work:ro",
+        "python:3.13.7-alpine",
+        "python",
+        "/work/backend.py"
+      ],
+      "stdout": "fb15a1e0c64a8ef69ed12cbd52b973855bf440bd8479dc0198281d0ddede011f\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "emminex-dd-e6bf94bc4d",
+        "python",
+        "-c",
+        "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)"
+      ],
+      "stdout": "200\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-c6a0646925",
+        "--network",
+        "emminex-dd-4c239df2eb",
+        "--network-alias",
+        "b",
+        "-e",
+        "BACKEND_NAME=b",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx:/work:ro",
+        "python:3.13.7-alpine",
+        "python",
+        "/work/backend.py"
+      ],
+      "stdout": "cbdcec169a149b8f8ce73ff0560163ce5b62678de644439a74dbf353d03e8d5b\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "emminex-dd-c6a0646925",
+        "python",
+        "-c",
+        "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/stats').status)"
+      ],
+      "stdout": "200\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-02ee7e28de",
+        "--network",
+        "emminex-dd-4c239df2eb",
+        "-p",
+        "127.0.0.1::8080",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/nginx/nginx.conf:/etc/nginx/nginx.conf:ro",
+        "nginx:1.28.0-alpine"
+      ],
+      "stdout": "34936c1c59cc43fd3a229d3bc1448e37c3ea0f65f6129d6363f06713fb3005a7\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "port",
+        "emminex-dd-02ee7e28de",
+        "8080/tcp"
+      ],
+      "stdout": "127.0.0.1:64345\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "GET retried after primary 503 and succeeded at backup",
+      "actual": {
+        "backend": "b",
+        "posts": 0
+      }
+    },
+    {
+      "assertion": "POST applied by primary then returned 503 without proxy retry",
+      "actual": {
+        "backend": "a",
+        "posts": 1
+      }
+    },
+    {
+      "command": [
+        "docker",
+        "logs",
+        "emminex-dd-02ee7e28de"
+      ],
+      "stdout": "/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration\n/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh\n10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf\n10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf\n/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh\n/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh\n/docker-entrypoint.sh: Configuration complete; ready for start up\nGET 200 upstream=172.21.0.2:8080, 172.21.0.3:8080 status=503, 200\nPOST 503 upstream=172.21.0.2:8080 status=503\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "upstream attempts captured in access log",
+      "actual": "GET 200 upstream=172.21.0.2:8080, 172.21.0.3:8080 status=503, 200\nPOST 503 upstream=172.21.0.2:8080 status=503"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-02ee7e28de"
+      ],
+      "stdout": "emminex-dd-02ee7e28de\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-c6a0646925"
+      ],
+      "stdout": "emminex-dd-c6a0646925\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-e6bf94bc4d"
+      ],
+      "stdout": "emminex-dd-e6bf94bc4d\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "emminex-dd-4c239df2eb"
+      ],
+      "stdout": "emminex-dd-4c239df2eb\n",
+      "stderr": "",
+      "exit": 0
+    }
+  ]
+}

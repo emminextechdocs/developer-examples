@@ -1,0 +1,31 @@
+{
+  "lab": "prometheus",
+  "started_at": "2026-09-14T17:41:52.782719+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/prometheus:/work:ro",
+        "-w",
+        "/work",
+        "--entrypoint",
+        "/bin/promtool",
+        "prom/prometheus:v3.5.0",
+        "test",
+        "rules",
+        "tests.yml"
+      ],
+      "stdout": "  SUCCESS\n\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "PromQL firing, pending, idle, missing-data, counter-reset and scrape-failure fixtures",
+      "actual": "SUCCESS"
+    }
+  ]
+}

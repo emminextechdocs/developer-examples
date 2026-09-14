@@ -1,0 +1,82 @@
+{
+  "lab": "rabbitmq",
+  "started_at": "2026-09-14T17:20:48.263488+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-6aae89c597",
+        "rabbitmq:4.1.4-management-alpine"
+      ],
+      "stdout": "1406231a13f8376bd1d7ffa6ee267620abb5172dc1413767089a6c1e00e40dd3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "--user",
+        "rabbitmq",
+        "emminex-dd-6aae89c597",
+        "rabbitmq-diagnostics",
+        "ping"
+      ],
+      "stdout": "Will ping rabbit@1406231a13f8. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\n",
+      "stderr": "Error:\nFailed to connect and authenticate to rabbit@1406231a13f8 in 60000 ms\n",
+      "exit": 69
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "--user",
+        "rabbitmq",
+        "emminex-dd-6aae89c597",
+        "rabbitmq-diagnostics",
+        "ping"
+      ],
+      "stdout": "Will ping rabbit@1406231a13f8. This only checks if the OS process is running and registered with epmd. Timeout: 60000 ms.\nPing succeeded\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "container:emminex-dd-6aae89c597",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/rabbitmq:/work:ro",
+        "python:3.13.7-alpine",
+        "sh",
+        "-c",
+        "pip install --quiet pika==1.3.2 && python /work/recovery.py"
+      ],
+      "stdout": "PASS unroutable mandatory publication rejected\nPASS publisher confirm received; consumer has not acknowledged\nPASS first delivery received without acknowledgement\nPASS disconnected consumer's message redelivered\nPASS acknowledgement removed message from queue\n",
+      "stderr": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n\n[notice] A new release of pip is available: 25.2 -> 26.2.1\n[notice] To update, run: pip install --upgrade pip\n",
+      "exit": 0
+    },
+    {
+      "assertion": "RabbitMQ confirms and redelivery",
+      "actual": "PASS unroutable mandatory publication rejected\nPASS publisher confirm received; consumer has not acknowledged\nPASS first delivery received without acknowledgement\nPASS disconnected consumer's message redelivered\nPASS acknowledgement removed message from queue"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-6aae89c597"
+      ],
+      "stdout": "emminex-dd-6aae89c597\n",
+      "stderr": "",
+      "exit": 0
+    }
+  ]
+}

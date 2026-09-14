@@ -1,0 +1,21 @@
+groups:
+  - name: checkout-latency
+    rules:
+      - record: service:requests:rate5m
+        expr: sum by (service) (rate(http_request_duration_seconds_count[5m]))
+      - record: service:slow_requests:ratio5m
+        expr: |
+          (service:requests:rate5m - sum by (service) (rate(http_request_duration_seconds_bucket{le="0.3"}[5m])))
+          / service:requests:rate5m
+      - alert: CheckoutLatencyBudgetBurn
+        expr: service:slow_requests:ratio5m / 0.001 > 14.4 and on (service) service:requests:rate5m > 1
+        for: 2m
+        labels:
+          severity: page
+        annotations:
+          summary: Slow checkout requests are consuming the latency budget
+      - alert: ScrapeTargetDown
+        expr: up{job="checkout"} == 0
+        for: 1m
+        labels:
+          severity: warning

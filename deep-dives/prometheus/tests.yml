@@ -1,0 +1,69 @@
+rule_files: [rules.yml]
+evaluation_interval: 1m
+tests:
+  - name: sustained two-percent slow traffic fires after pending period
+    interval: 1m
+    input_series:
+      - series: 'http_request_duration_seconds_count{service="checkout",instance="a"}'
+        values: '0+6000x10'
+      - series: 'http_request_duration_seconds_bucket{service="checkout",instance="a",le="0.3"}'
+        values: '0+5880x10'
+    alert_rule_test:
+      - eval_time: 1m
+        alertname: CheckoutLatencyBudgetBurn
+        exp_alerts: []
+      - eval_time: 5m
+        alertname: CheckoutLatencyBudgetBurn
+        exp_alerts:
+          - exp_labels: {service: checkout, severity: page}
+            exp_annotations: {summary: Slow checkout requests are consuming the latency budget}
+    promql_expr_test:
+      - expr: service:slow_requests:ratio5m
+        eval_time: 5m
+        exp_samples:
+          - labels: '{__name__="service:slow_requests:ratio5m",service="checkout"}'
+            value: 0.02
+  - name: idle service does not page for latency
+    interval: 1m
+    input_series:
+      - series: 'http_request_duration_seconds_count{service="checkout"}'
+        values: '0+0x10'
+      - series: 'http_request_duration_seconds_bucket{service="checkout",le="0.3"}'
+        values: '0+0x10'
+    alert_rule_test:
+      - eval_time: 5m
+        alertname: CheckoutLatencyBudgetBurn
+        exp_alerts: []
+  - name: missing metrics are not automatically a latency breach
+    input_series: []
+    alert_rule_test:
+      - eval_time: 5m
+        alertname: CheckoutLatencyBudgetBurn
+        exp_alerts: []
+  - name: known failed scrape has its own alert
+    input_series:
+      - series: 'up{job="checkout",instance="a"}'
+        values: '0+0x10'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: ScrapeTargetDown
+        exp_alerts:
+          - exp_labels: {job: checkout, instance: a, severity: warning}
+  - name: a counter reset remains measurable
+    interval: 1m
+    input_series:
+      - series: 'http_request_duration_seconds_count{service="checkout"}'
+        values: '0 6000 0 6000 12000 18000'
+      - series: 'http_request_duration_seconds_bucket{service="checkout",le="0.3"}'
+        values: '0 5880 0 5880 11760 17640'
+    promql_expr_test:
+      - expr: resets(http_request_duration_seconds_count[5m])
+        eval_time: 5m
+        exp_samples:
+          - labels: '{service="checkout"}'
+            value: 1
+      - expr: service:slow_requests:ratio5m
+        eval_time: 5m
+        exp_samples:
+          - labels: '{__name__="service:slow_requests:ratio5m",service="checkout"}'
+            value: 0.02

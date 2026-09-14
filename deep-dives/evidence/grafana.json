@@ -1,0 +1,143 @@
+{
+  "lab": "grafana",
+  "started_at": "2026-09-14T17:52:00.915904+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "create",
+        "emminex-dd-38b016a5d6"
+      ],
+      "stdout": "78b63eee4c6e2585668fbbbafe1297edd82c18cb80c735e12d342d4e47520c79\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-c811981d90",
+        "--network",
+        "emminex-dd-38b016a5d6",
+        "--network-alias",
+        "metrics",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/grafana/prometheus.yml:/etc/prometheus/prometheus.yml:ro",
+        "prom/prometheus:v3.5.0"
+      ],
+      "stdout": "526d0db1e9de088b2900602c3600229e4de7925ba75a270aaae7a1ef47c5a85b\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-fe2d56fc35",
+        "--network",
+        "emminex-dd-38b016a5d6",
+        "-p",
+        "127.0.0.1::3000",
+        "-e",
+        "GF_SECURITY_ADMIN_PASSWORD=local-lab-only",
+        "-e",
+        "GF_AUTH_ANONYMOUS_ENABLED=true",
+        "-e",
+        "GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/grafana/provisioning:/etc/grafana/provisioning:ro",
+        "-v",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpbob3rpx0:/var/lib/grafana/dashboards:ro",
+        "grafana/grafana:12.1.1"
+      ],
+      "stdout": "04f3063dcf4382a1793aa031457bae07314718ac0be805cd351045fda9b98fec\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "port",
+        "emminex-dd-fe2d56fc35",
+        "3000/tcp"
+      ],
+      "stdout": "127.0.0.1:64954\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "dashboard and healthy datasource provisioned with stable UIDs",
+      "actual": {
+        "details": {
+          "application": "Prometheus",
+          "features": {
+            "rulerApiEnabled": false
+          }
+        },
+        "message": "Successfully queried the Prometheus API.",
+        "status": "OK"
+      }
+    },
+    {
+      "assertion": "API cannot overwrite file-owned dashboard",
+      "actual": "{\"message\":\"Cannot save provisioned dashboard\"}"
+    },
+    {
+      "assertion": "file update applied without changing dashboard UID",
+      "actual": "Provisioned reliability dashboard: revised"
+    },
+    {
+      "command": [
+        "node",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/render.mjs",
+        "--url",
+        "http://127.0.0.1:64954/d/reliability-lab?orgId=1&from=now-1m&to=now",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/assets/grafana-dashboard.png"
+      ],
+      "stdout": "",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-fe2d56fc35"
+      ],
+      "stdout": "emminex-dd-fe2d56fc35\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-c811981d90"
+      ],
+      "stdout": "emminex-dd-c811981d90\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "rm",
+        "emminex-dd-38b016a5d6"
+      ],
+      "stdout": "emminex-dd-38b016a5d6\n",
+      "stderr": "",
+      "exit": 0
+    }
+  ]
+}
