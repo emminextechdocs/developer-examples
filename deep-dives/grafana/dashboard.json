@@ -1,0 +1,17 @@
+{
+  "uid": "reliability-lab",
+  "title": "Provisioned reliability dashboard",
+  "schemaVersion": 41,
+  "version": 1,
+  "timezone": "utc",
+  "time": {"from": "now-15m", "to": "now"},
+  "refresh": "5s",
+  "panels": [
+    {"id": 1, "title": "Prometheus self-scrape", "type": "timeseries",
+     "datasource": {"type": "prometheus", "uid": "prom-lab"},
+     "gridPos": {"x": 0, "y": 0, "w": 24, "h": 10},
+     "targets": [{"refId": "A", "expr": "up{job=\"prometheus\"}", "legendFormat": "{{instance}}"}],
+     "fieldConfig": {"defaults": {"min": 0, "max": 1}, "overrides": []},
+     "options": {"legend": {"displayMode": "list", "placement": "bottom"}}}
+  ]
+}

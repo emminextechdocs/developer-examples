@@ -1,0 +1,27 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+processors:
+  attributes/redact:
+    actions:
+      - key: user.email
+        action: delete
+      - key: http.request.header.authorization
+        action: delete
+  resource/redact:
+    attributes:
+      - key: host.name
+        action: delete
+  batch:
+    timeout: 1s
+exporters:
+  file:
+    path: /evidence/traces.json
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [attributes/redact, resource/redact, batch]
+      exporters: [file]

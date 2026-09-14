@@ -1,0 +1,197 @@
+{
+  "lab": "kubernetes",
+  "started_at": "2026-09-14T17:21:09.288360+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "/tmp/emminex-dd-bin/kind",
+        "create",
+        "cluster",
+        "--name",
+        "emminex-dd-5a788348",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "--image",
+        "kindest/node:v1.34.0",
+        "--wait",
+        "120s"
+      ],
+      "stdout": "",
+      "stderr": "Creating cluster \"emminex-dd-5a788348\" ...\n \u2022 Ensuring node image (kindest/node:v1.34.0) \ud83d\uddbc  ...\n \u2713 Ensuring node image (kindest/node:v1.34.0) \ud83d\uddbc\n \u2022 Preparing nodes \ud83d\udce6   ...\n \u2713 Preparing nodes \ud83d\udce6 \n \u2022 Writing configuration \ud83d\udcdc  ...\n \u2713 Writing configuration \ud83d\udcdc\n \u2022 Starting control-plane \ud83d\udd79\ufe0f  ...\n \u2713 Starting control-plane \ud83d\udd79\ufe0f\n \u2022 Installing CNI \ud83d\udd0c  ...\n \u2713 Installing CNI \ud83d\udd0c\n \u2022 Installing StorageClass \ud83d\udcbe  ...\n \u2713 Installing StorageClass \ud83d\udcbe\n \u2022 Waiting \u2264 2m0s for control-plane = Ready \u23f3  ...\n \u2713 Waiting \u2264 2m0s for control-plane = Ready \u23f3\n \u2022 Ready after 17s \ud83d\udc9a\nSet kubectl context to \"kind-emminex-dd-5a788348\"\nYou can now use your cluster with:\n\nkubectl cluster-info --context kind-emminex-dd-5a788348 --kubeconfig /var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig\n\nHave a nice day! \ud83d\udc4b\n",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "create",
+        "configmap",
+        "draining-app",
+        "--from-file",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/kubernetes/app.py"
+      ],
+      "stdout": "configmap/draining-app created\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "apply",
+        "-f",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/kubernetes/pod.yml"
+      ],
+      "stdout": "pod/draining-app created\nservice/draining-app created\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "wait",
+        "--for=condition=Ready",
+        "pod/draining-app",
+        "--timeout=120s"
+      ],
+      "stdout": "pod/draining-app condition met\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "logs",
+        "draining-app"
+      ],
+      "stdout": "10.244.0.1 - - [14/Sep/2026 17:21:48] \"GET /ready HTTP/1.1\" 200 -\n{\"event\": \"work_started\"}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "delete",
+        "pod",
+        "draining-app",
+        "--wait=false"
+      ],
+      "stdout": "pod \"draining-app\" deleted from default namespace\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "kubectl",
+        "--kubeconfig",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpyli03t04/kubeconfig",
+        "get",
+        "endpointslice",
+        "-l",
+        "kubernetes.io/service-name=draining-app",
+        "-o",
+        "json"
+      ],
+      "stdout": "{\n    \"apiVersion\": \"v1\",\n    \"items\": [\n        {\n            \"addressType\": \"IPv4\",\n            \"apiVersion\": \"discovery.k8s.io/v1\",\n            \"endpoints\": [\n                {\n                    \"addresses\": [\n                        \"10.244.0.5\"\n                    ],\n                    \"conditions\": {\n                        \"ready\": false,\n                        \"serving\": true,\n                        \"terminating\": true\n                    },\n                    \"nodeName\": \"emminex-dd-5a788348-control-plane\",\n                    \"targetRef\": {\n                        \"kind\": \"Pod\",\n                        \"name\": \"draining-app\",\n                        \"namespace\": \"default\",\n                        \"uid\": \"96d97665-e157-44ee-8668-44e94f300622\"\n                    }\n                }\n            ],\n            \"kind\": \"EndpointSlice\",\n            \"metadata\": {\n                \"creationTimestamp\": \"2026-09-14T17:21:36Z\",\n                \"generateName\": \"draining-app-\",\n                \"generation\": 4,\n                \"labels\": {\n                    \"endpointslice.kubernetes.io/managed-by\": \"endpointslice-controller.k8s.io\",\n                    \"kubernetes.io/service-name\": \"draining-app\"\n                },\n                \"name\": \"draining-app-wwtzl\",\n                \"namespace\": \"default\",\n                \"ownerReferences\": [\n                    {\n                        \"apiVersion\": \"v1\",\n                        \"blockOwnerDeletion\": true,\n                        \"controller\": true,\n                        \"kind\": \"Service\",\n                        \"name\": \"draining-app\",\n                        \"uid\": \"1f17e6f6-c458-486d-be38-9ea62d7f4cd4\"\n                    }\n                ],\n                \"resourceVersion\": \"492\",\n                \"uid\": \"3fc025da-d942-4ec2-affb-ea58c8f45d72\"\n            },\n            \"ports\": [\n                {\n                    \"name\": \"\",\n                    \"port\": 8080,\n                    \"protocol\": \"TCP\"\n                }\n            ]\n        }\n    ],\n    \"kind\": \"List\",\n    \"metadata\": {\n        \"resourceVersion\": \"\"\n    }\n}\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "EndpointSlice observed during deletion",
+      "actual": {
+        "apiVersion": "v1",
+        "items": [
+          {
+            "addressType": "IPv4",
+            "apiVersion": "discovery.k8s.io/v1",
+            "endpoints": [
+              {
+                "addresses": [
+                  "10.244.0.5"
+                ],
+                "conditions": {
+                  "ready": false,
+                  "serving": true,
+                  "terminating": true
+                },
+                "nodeName": "emminex-dd-5a788348-control-plane",
+                "targetRef": {
+                  "kind": "Pod",
+                  "name": "draining-app",
+                  "namespace": "default",
+                  "uid": "96d97665-e157-44ee-8668-44e94f300622"
+                }
+              }
+            ],
+            "kind": "EndpointSlice",
+            "metadata": {
+              "creationTimestamp": "2026-09-14T17:21:36Z",
+              "generateName": "draining-app-",
+              "generation": 4,
+              "labels": {
+                "endpointslice.kubernetes.io/managed-by": "endpointslice-controller.k8s.io",
+                "kubernetes.io/service-name": "draining-app"
+              },
+              "name": "draining-app-wwtzl",
+              "namespace": "default",
+              "ownerReferences": [
+                {
+                  "apiVersion": "v1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "Service",
+                  "name": "draining-app",
+                  "uid": "1f17e6f6-c458-486d-be38-9ea62d7f4cd4"
+                }
+              ],
+              "resourceVersion": "492",
+              "uid": "3fc025da-d942-4ec2-affb-ea58c8f45d72"
+            },
+            "ports": [
+              {
+                "name": "",
+                "port": 8080,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "kind": "List",
+        "metadata": {
+          "resourceVersion": ""
+        }
+      }
+    },
+    {
+      "assertion": "in-flight request completes during graceful deletion",
+      "actual": {
+        "completed": true
+      }
+    },
+    {
+      "assertion": "application lifecycle logs",
+      "actual": "10.244.0.1 - - [14/Sep/2026 17:21:48] \"GET /ready HTTP/1.1\" 200 -\n{\"event\": \"work_started\"}\n10.244.0.1 - - [14/Sep/2026 17:21:49] \"GET /ready HTTP/1.1\" 200 -\n10.244.0.1 - - [14/Sep/2026 17:21:50] \"GET /ready HTTP/1.1\" 200 -\n{\"event\": \"drain_started\"}\n127.0.0.1 - - [14/Sep/2026 17:21:50] \"GET /drain HTTP/1.1\" 200 -\n10.244.0.1 - - [14/Sep/2026 17:21:51] \"GET /ready HTTP/1.1\" 503 -\n10.244.0.1 - - [14/Sep/2026 17:21:52] \"GET /ready HTTP/1.1\" 503 -\n{\"event\": \"sigterm\", \"active\": 1}\n10.244.0.1 - - [14/Sep/2026 17:21:53] \"GET /ready HTTP/1.1\" 503 -\n10.244.0.1 - - [14/Sep/2026 17:21:54] \"GET /ready HTTP/1.1\" 503 -\n127.0.0.1 - - [14/Sep/2026 17:21:55] \"GET /work HTTP/1.1\" 200 -\n{\"event\": \"work_completed\"}\n{\"event\": \"shutdown_complete\"}\n"
+    },
+    {
+      "command": [
+        "/tmp/emminex-dd-bin/kind",
+        "delete",
+        "cluster",
+        "--name",
+        "emminex-dd-5a788348"
+      ],
+      "stdout": "",
+      "stderr": "Deleting cluster \"emminex-dd-5a788348\" ...\nDeleted nodes: [\"emminex-dd-5a788348-control-plane\"]\n",
+      "exit": 0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>otel — recorded experiment</title><style>
+      *{box-sizing:border-box} body{margin:0;background:#F5F6F2;color:#17211D;font:22px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:64px} main{max-width:1240px;margin:auto} small{font:18px monospace;color:#176B55} h1{font-size:42px;line-height:1.15;margin:18px 0} p{color:#5D6964;font-size:20px} article{background:#fff;border:1px solid #D8DFDA;border-left:5px solid #176B55;margin:24px 0;padding:24px}h2{font-size:24px;margin:0 0 12px}pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:18px/1.5 'SFMono-Regular',Consolas,monospace}</style><main><small>EMMINEX TECHDOCS · EXECUTION EVIDENCE</small><h1>otel: recorded assertions</h1><p>Captured from the runnable lab’s test report. This is an evidence view, not the tool’s own interface.<br>Run started: 2026-09-14T17:41:53.026951+00:00</p><article><h2>configured span and resource attributes removed before export</h2><pre>{
+  "customer.tier": {
+    "stringValue": "pro"
+  }
+}</pre></article><article><h2>boundary test: span-event attribute survives the first pipeline</h2><pre>[
+  {
+    "timeUnixNano": "1789401600050000000",
+    "name": "synthetic privacy boundary probe",
+    "attributes": [
+      {
+        "key": "user.email",
+        "value": {
+          "stringValue": "event-probe@example.test"
+        }
+      }
+    ]
+  }
+]</pre></article><article><h2>explicit span-event transform removes the tested leak</h2><pre>All three synthetic sensitive values absent; customer.tier retained</pre></article></main></html>

@@ -6,11 +6,12 @@ Small, testable examples from [Emminex Techdocs](https://emminextechdocs.com), b
 
 | Example | What you will learn |
 | --- | --- |
+| [Senior developer deep dives](deep-dives/README.md) | PostgreSQL, Redis, Kafka, RabbitMQ, Prometheus, Grafana, NGINX, OpenTelemetry, BuildKit, and Kubernetes failure behavior |
 | [HTTP JSON client](http-json-client/README.md) | Handle HTTP errors, malformed JSON, timeouts, and local integration tests |
 
-This collection starts with one tested example. More examples should be added only after their prerequisites, success path, and failure paths have been checked. It is not a downloadable version of every blog tutorial.
+The HTTP client runs with Node alone. The [senior developer deep dives](deep-dives/README.md) add ten Docker-backed experiments with separate prerequisites and recorded failure-path evidence.
 
-## Run all tests
+## Run the HTTP client tests
 
 Prerequisites: Node.js 22 or 24. No packages, accounts, or external API keys are needed.
 

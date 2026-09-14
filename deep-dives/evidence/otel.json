@@ -1,0 +1,120 @@
+{
+  "lab": "otel",
+  "started_at": "2026-09-14T17:41:53.026951+00:00",
+  "passed": true,
+  "events": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-bd738d88ae",
+        "-p",
+        "127.0.0.1::4318",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/otel/collector.yml:/etc/otelcol-contrib/config.yaml:ro",
+        "-v",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmpqs5bg4b_:/evidence",
+        "otel/opentelemetry-collector-contrib:0.133.0"
+      ],
+      "stdout": "0a5d6082679fa563f6fa8e202c8dee8a882e9f362c7216cf35c314605d23b35e\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "port",
+        "emminex-dd-bd738d88ae",
+        "4318/tcp"
+      ],
+      "stdout": "127.0.0.1:64717\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-bd738d88ae"
+      ],
+      "stdout": "emminex-dd-bd738d88ae\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "configured span and resource attributes removed before export",
+      "actual": {
+        "customer.tier": {
+          "stringValue": "pro"
+        }
+      }
+    },
+    {
+      "assertion": "boundary test: span-event attribute survives the first pipeline",
+      "actual": [
+        {
+          "timeUnixNano": "1789401600050000000",
+          "name": "synthetic privacy boundary probe",
+          "attributes": [
+            {
+              "key": "user.email",
+              "value": {
+                "stringValue": "event-probe@example.test"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "emminex-dd-6cc3cb24b8",
+        "-p",
+        "127.0.0.1::4318",
+        "-v",
+        "/private/tmp/emminex-deep-dives-code/deep-dives/otel/collector-events.yml:/etc/otelcol-contrib/config.yaml:ro",
+        "-v",
+        "/var/folders/wh/qhtbhyy90f5f1wgwmj2y_b200000gn/T/tmp0s3c0qgk:/evidence",
+        "otel/opentelemetry-collector-contrib:0.133.0"
+      ],
+      "stdout": "d21efb69fd862ae54c7cb5c2d8572144263af559b6be389541f80e63f11ff61c\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "port",
+        "emminex-dd-6cc3cb24b8",
+        "4318/tcp"
+      ],
+      "stdout": "127.0.0.1:64721\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "-v",
+        "emminex-dd-6cc3cb24b8"
+      ],
+      "stdout": "emminex-dd-6cc3cb24b8\n",
+      "stderr": "",
+      "exit": 0
+    },
+    {
+      "assertion": "explicit span-event transform removes the tested leak",
+      "actual": "All three synthetic sensitive values absent; customer.tier retained"
+    }
+  ]
+}
