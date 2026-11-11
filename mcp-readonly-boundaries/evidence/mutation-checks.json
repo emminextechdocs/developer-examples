@@ -1,0 +1,18 @@
+{
+  "removed_allowlist": {
+    "exitCode": 1,
+    "failedAssertions": [
+      "\u2716 private and nonexistent document IDs receive the same application error (1.441292ms)",
+      "\u2716 failing tests:",
+      "\u2716 private and nonexistent document IDs receive the same application error (1.441292ms)"
+    ]
+  },
+  "string_length_instead_of_utf8_bytes": {
+    "exitCode": 1,
+    "failedAssertions": [
+      "\u2716 blocks an allowed document whose UTF-8 payload exceeds the limit (0.880667ms)",
+      "\u2716 failing tests:",
+      "\u2716 blocks an allowed document whose UTF-8 payload exceeds the limit (0.880667ms)"
+    ]
+  }
+}

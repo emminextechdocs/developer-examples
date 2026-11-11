@@ -1,0 +1,25 @@
+
+> emminex-mcp-readonly-boundaries@1.0.0 test
+> node --test --test-timeout=10000 --test-reporter=spec test/*.test.mjs
+
+✔ advertises one bounded read tool, not a generic file reader (129.050875ms)
+✔ returns the exact approved document (2.62375ms)
+✔ private and nonexistent document IDs receive the same application error (2.016833ms)
+✔ rejects relative traversal through the MCP schema (2.394916ms)
+✔ rejects absolute path through the MCP schema (0.658125ms)
+✔ rejects URL through the MCP schema (0.400667ms)
+✔ rejects non-string ID through the MCP schema (0.485458ms)
+✔ rejects oversized ID through the MCP schema (0.563416ms)
+✔ rejects extra path argument through the MCP schema (0.52275ms)
+✔ blocks an allowed document whose UTF-8 payload exceeds the limit (0.437459ms)
+✔ an unknown tool is a protocol error, not a successful empty result (0.873542ms)
+✔ a valid read still works after rejected requests (0.269209ms)
+✔ policy calls leave the local synthetic catalogue unchanged (0.06775ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.130958
