@@ -1,0 +1,29 @@
+
+> emminex-mcp-readonly-boundaries@1.0.0 demo
+> node demo.mjs
+
+{
+  "documentId": "getting-started",
+  "isError": false,
+  "payload": {
+    "documentId": "getting-started",
+    "title": "Getting started",
+    "body": "Create a sandbox project, then request a test API key. Never paste a production key into a support ticket."
+  }
+}
+{
+  "documentId": "internal-notes",
+  "isError": true,
+  "payload": {
+    "code": "DOCUMENT_NOT_AVAILABLE",
+    "message": "Choose a public document ID from the tool description."
+  }
+}
+{
+  "documentId": "oversized-fixture",
+  "isError": true,
+  "payload": {
+    "code": "DOCUMENT_TOO_LARGE",
+    "message": "This document exceeds the export limit. Ask the maintainer for a smaller published section."
+  }
+}

@@ -19,4 +19,15 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: ${{ matrix.node }}
-      - run: node --test
+      - name: Test the HTTP client
+        working-directory: http-json-client
+        run: node --test
+      - name: Install the MCP example dependencies
+        working-directory: mcp-readonly-boundaries
+        run: npm ci
+      - name: Audit the MCP example dependencies
+        working-directory: mcp-readonly-boundaries
+        run: npm audit --audit-level=high
+      - name: Test the MCP access boundaries
+        working-directory: mcp-readonly-boundaries
+        run: npm test
